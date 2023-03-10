@@ -253,8 +253,8 @@ with iface:
                     ["audioldm-s-full", "audioldm-l-full", "audioldm-s-full-v2"], value="audioldm-s-full", label="Choose the model to use. -l- means large model, -s- means small model."
                 )
             ############# Output
-            # outputs=gr.Audio(label="Output", type="numpy")
-            outputs = gr.Video(label="Output", elem_id="output-video")
+            outputs=gr.Audio(label="Output", type="numpy", elem_id="output-audio")
+            # outputs = gr.Video(label="Output", elem_id="output-video")
 
             # with gr.Group(elem_id="container-advanced-btns"):
             #   # advanced_button = gr.Button("Advanced options", elem_id="advanced-btn")
@@ -274,6 +274,7 @@ with iface:
             text2audio,
             inputs=[textbox, duration, guidance_scale, seed, n_candidates, model_name],
             outputs=[outputs],
+			api_name="text2audio",
         )
 
         # share_button.click(None, [], [], _js=share_js)
