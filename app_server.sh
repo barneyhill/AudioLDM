@@ -5,6 +5,7 @@
 #$ -e logs/
 #$ -P lindgren.prjc
 #$ -wd /well/lindgren/barney/AudioLDM
+#$ -q short.qg 
 #$ -l gpu=1,gputype=a100
 
 . init_env.sh

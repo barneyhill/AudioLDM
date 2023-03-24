@@ -1,12 +1,15 @@
 import gradio as gr
 import numpy as np
 from audioldm import text_to_audio, build_model
+import torch
+torch.cuda.empty_cache()
+
+print(torch.cuda.memory_summary(device=None, abbreviated=False)) 
 
 # from share_btn import community_icon_html, loading_icon_html, share_js
 
-model_id = "haoheliu/AudioLDM-S-Full"
-
-audioldm = None
+model_name = "audioldm-s-full-v2"
+audioldm = build_model(model_name=model_name)
 
 # audioldm=None
 
@@ -27,12 +30,12 @@ audioldm = None
 
 def text2audio(text, duration, guidance_scale, random_seed, n_candidates, model_name):
     global audioldm
-    audioldm=build_model(model_name=model_name)
     # print(text, length, guidance_scale)
     waveform = text_to_audio(
         latent_diffusion=audioldm,
         text=text,
         seed=random_seed,
+		ddim_steps=100,
         duration=duration,
         guidance_scale=guidance_scale,
         n_candidate_gen_per_text=int(n_candidates),
@@ -326,6 +329,6 @@ with iface:
             )
 # <p>This demo is strictly for research demo purpose only. For commercial use please <a href="haoheliu@gmail.com">contact us</a>.</p>
 
-iface.queue(concurrency_count=3)
+iface.queue(concurrency_count=1)
 # iface.launch(debug=True)
 iface.launch(debug=True, share=True)

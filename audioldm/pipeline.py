@@ -109,7 +109,7 @@ def text_to_audio(
     text,
     original_audio_file_path = None,
     seed=42,
-    ddim_steps=200,
+    ddim_steps=100,
     duration=10,
     batchsize=1,
     guidance_scale=2.5,
@@ -215,7 +215,8 @@ def style_transfer(
     prompts = text
 
     with torch.no_grad():
-        with autocast("cuda"):
+        #with autocast("cuda"):
+        with torch.cuda.amp.autocast():
             with latent_diffusion.ema_scope():
                 uc = None
                 if guidance_scale != 1.0:
